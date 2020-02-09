@@ -109,7 +109,7 @@ class Explore extends Component {
                                 setFevorate={this.setFevorateHandler}
                                 title={movie.title}
                                 body={movie.overview.length > 80 ? movie.overview.slice(0, 80) + "..." : movie.overview}
-                                image={movie.coverImage}
+                                src={movie.poster_path}
                                 isfevorate={isfevorateMovie}
                                 to={"/movie/" + movie.id}
                             />

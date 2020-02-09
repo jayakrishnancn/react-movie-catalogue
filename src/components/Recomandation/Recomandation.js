@@ -3,6 +3,8 @@ import Card from '../Card/Card';
 import CardGroup from '../../hoc/CardGroup';
 import Axios from 'axios';
 import movieDb from '../util/movieDb'
+import Spinner from '../../hoc/Spinner';
+import Container from '../../hoc/Container';
 
 class Recomandation extends Component {
     
@@ -51,7 +53,7 @@ class Recomandation extends Component {
 
         console.log(this.state.movies,"render")
         if(this.state.movies.length==0){
-            return null
+            return <Container style={{marginTop:'40px'}}><Spinner/></Container>
         }                            
         return ( 
 
@@ -66,6 +68,7 @@ class Recomandation extends Component {
                              body={movie.overview.length > 80 ? movie.overview.slice(0, 80) + "..." : movie.overview}
                              image={movie.coverImage}
                              to={"/movie/"+movie.id}
+                             replaceLink
                          />
                     })}
                 </CardGroup>
