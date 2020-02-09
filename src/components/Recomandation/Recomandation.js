@@ -34,13 +34,17 @@ class Recomandation extends Component {
             }
         })
     }
-    shouldComponentUpdate(props,state){
+    shouldComponentUpdate(newProps,newState){
+
+        if(this.props.movieId != newProps.movieId){
+            return true
+        }
 
         if(this.state.fetched){
             return false
         }
 
-        return  this.state.movies.length === 0 || props.movieId !== this.props.movieId
+        return  this.state.movies.length === 0 || newProps.movieId !== this.props.movieId
     }
     
     render() { 
