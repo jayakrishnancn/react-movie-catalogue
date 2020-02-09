@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Link} from 'react-router-dom'
 
 
 function Navbar() {
@@ -9,8 +9,8 @@ function Navbar() {
                 Movie Catalogue
             </ul>
             <ul>    
-                <li><a href="#Explore">Explore</a></li>
-                <li><a href="#Search">Search</a></li>
+                <li><Link to={{pathname:'/explore'}}>Explore</Link></li>
+                <li><Link to={{pathname:'search'}}>Search</Link></li>
             </ul>
         </nav>
     )

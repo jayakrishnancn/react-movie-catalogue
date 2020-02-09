@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import * as movieApi from '../util/TheMovieDb'
 import Result from '../Result/Result'
 import Filter,{BaseFilter,LanguageFilter,RatingFilter,ReleaseDateFilter} from '../Filter/Filter'
 import './Search.css'
 
-class Search extends Component {
+class Search extends PureComponent {
     
     state = {
         movies: [],
@@ -18,6 +18,7 @@ class Search extends Component {
 
 
     componentDidMount() {
+        console.log("[Saerch js] did mount")
         let movies = movieApi.getTopRated()
         let languages = [];
         let releaseDates = [] 
