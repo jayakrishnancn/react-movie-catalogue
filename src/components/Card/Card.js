@@ -11,10 +11,10 @@ function Card(props) {
     } 
 
     return ( 
-        <div className="card">
+        <div className={props.className? "card " + props.className :'card' }>
         {props.children? props.children: (
                 <Wrapper>
-                    <h1>{props.title}</h1>
+                    <strong>{props.title}</strong>
                     <p>{props.body}</p>
                     {More}
                 </Wrapper> 

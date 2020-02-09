@@ -28,3 +28,7 @@ code {
 .ml-auto{
   margin-left: auto;
 }
+
+.p-0{
+  padding: 0 !important;
+}

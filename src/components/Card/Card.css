@@ -3,5 +3,53 @@
     padding: 1rem;
     border-radius: 3px;
     display: flex;
+    position: relative;
     flex-direction: column;
+    text-align: justify;
+    box-shadow: 3px 3px 5px 0px #ccc;
+}
+.card-title{
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+.card-footer{
+    padding: 1rem;
+    align-items: center;
+    background: #eee;
+    border-top: 3px solid #888;
+}
+.badge{    
+    position: absolute;
+    padding: 0.4rem;
+    border-radius: 4px;
+    line-height: 1.5rem;
+    font-size: .9rem;
+    font-weight: bold;
+    transform: translate(-50%,-50%);
+    width: 40px;
+    height: 40px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.badge.danger{
+    background: #F44336;
+    color: #fff;
+}
+.card .star{
+    box-sizing: border-box;
+    cursor: pointer;
+    background: #FFF;
+    color: #555;
+    border: 3px solid #888;
+    right: 0;
+    transform: translate(50%,-50%)
+}
+
+.card .star.active{
+    color: #FFF;
+    border-color: #F44336;
+    background-color: #F44336;
 }

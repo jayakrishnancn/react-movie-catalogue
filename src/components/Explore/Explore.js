@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import Container from '../../hoc/Container'
 import Card from '../Card/Card'
 import CardGroup from '../../hoc/CardGroup'
+import axios from 'axios';
+import Spinner from '../../hoc/Spinner';
 
 class Explore extends Component {
   
@@ -10,10 +12,12 @@ class Explore extends Component {
         
         this.state = {
             movies: [],
-            movieIdList: []
+            movieIdList: [],
+            loading: true
         }
         
     }
+
     cardClickHandler = ()=>{
         console.log('cardClickHandler')
     }
@@ -24,29 +28,34 @@ class Explore extends Component {
     }
 
     fetchMovies = ()=>{
-        console.log("[Explore.js] Fetch Movies")
-        const movieIdList = [1]
-        const movies =[{
-            title: "this is a title",
-            id:1,
-            original_content: "this is an original content",
-            coverImage: "image.jpg",
-        },{
-            title: "this is a title",
-            id:2,
-            original_content: "this is an original content",
-            coverImage: "image.jpg",
-        }]
-        const oldMovieIdList = [...this.state.movieIdList]
-        if(!this.arrayEqual(oldMovieIdList,movieIdList)){
-            this.setState({movies,movieIdList})
-        }
+        const id = this.props.match.params.id
+        let api = null
 
-    }
-    shouldComponentUpdate(newProps,newState){
-        const oldMovieIdList = [...this.state.movieIdList]
-        return this.state.movieIdList.length === 0 || !this.arrayEqual([oldMovieIdList],newState.movieIdList)
-    }
+        switch(id){
+            default :
+            case "top" : api = "movie/top_rated?";break; 
+            case "new" : api = "/new";break; 
+        }
+        if(!api){
+            return 
+        }
+        
+        axios.get(api).then(res => {
+
+            const movies = res.data.results
+
+            const movieIdList = movies.map(movie=>movie.id)
+            const oldMovieIdList = [...this.state.movieIdList]
+
+            if(!this.arrayEqual(oldMovieIdList,movieIdList)){
+                this.setState({movies,movieIdList,loading:false})
+                
+            }
+    
+        })
+
+    } 
+
     arrayEqual(a,b){
         if(a.length === b.length){
             a.forEach(aItem=>{
@@ -61,23 +70,26 @@ class Explore extends Component {
     }
 
     render() { 
-        console.log(this.state.movies,"[Explore.js] Render")
-        return ( 
-            <Container>
-                <CardGroup>
-                    { this.state.movies.map(movie =>{
-                        return <Card 
-                            key={movie.id}
-                            title={movie.title}
-                            body={movie.original_content}
-                            image={movie.coverImage}
-                            to={"/movie/" + movie.id}
-                            />
-                    })}
-                </CardGroup>
-            </Container>
+        if(!this.state.loading){
+            console.log(this.state.movies,"[Explore.js] Render")
+            return ( 
+                <Container>
+                    <CardGroup>
+                        { this.state.movies.map(movie =>{
+                            return <Card 
+                                key={movie.id}
+                                title={movie.title}
+                                body={ movie.overview.length > 80 ? movie.overview.slice(0,80) + "..." : movie.overview}
+                                image={movie.coverImage}
+                                to={"/movie/" + movie.id}
+                                />
+                        })}
+                    </CardGroup>
+                </Container>
 
-         );
+            );
+        }
+        return <Container><Spinner/></Container>
     }
 }
  
