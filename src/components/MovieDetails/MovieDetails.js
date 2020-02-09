@@ -7,17 +7,24 @@ import firebaseAxios from '../util/firebaseAxios';
 import movieDb,{ firebase } from '../util/movieDb'
 import Img from '../../hoc/Img';
 import Spinner from '../../hoc/Spinner';
+import Rating from '../Rating/Rating';
+import Recomandation from '../Recomandation/Recomandation';
 
 class MovieDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { movie: {}, loading: true , isfevorate: null, isfevorateLoading: false}
+        this.state = { 
+            movie: {}, 
+            loading: true , 
+            isfevorate: null, 
+            isfevorateLoading: true
+        }
     }
 
     shouldComponentUpdate(newProps, newState) {
         console.log("[MovieDetails.js] should render")
-        return !newState.movie.title || newState.movie.title !== this.state.movie.title ||
+        return !newState.movie.id || newState.movie.id !== this.state.movie.id ||
         newState.isfevorate !== this.state.isfevorate || this.state.isfevorateLoading !== newState.isfevorateLoading
     }
 
@@ -38,13 +45,14 @@ class MovieDetails extends Component {
             })
             .then(movieId =>{
                 firebaseAxios.get(firebase.fevorate).then(res =>{
+
                     for(let key in res.data){
                         if ( res.data[key] === this.state.movie.id ){
                             this.setState({isfevorate:key,isfevorateLoading:false})
-                            return
+                            return 
                         }
                     }
-
+                    this.setState({isfevorateLoading:false})
                 })
             })
     }
@@ -84,18 +92,16 @@ class MovieDetails extends Component {
     }
     render() {
         const title = this.state.movie.title;
+        const id = this.state.movie.id
         const body = this.state.movie.overview
         const posterPath = this.state.movie.poster_path ? movieDb.IMG_BASEPATH + this.state.movie.poster_path : null;
         const poster = <Img src={posterPath} alt={title} />
-        const fevorate = !this.state.isfevorateLoading? (
-            <div onClick={this.toggleFevorateHandler} 
-                className={this.state.isfevorate?"active star badge" : 'star badge'}
-                >&#9734;</div>
-        ) :  (
-            <div 
-                className={this.state.isfevorate?"active star badge" : 'star badge'}
-                ><Spinner type='2'/></div>
-        ) 
+        const fevorate = ( <Rating
+                            click={this.toggleFevorateHandler} 
+                            loading={this.state.isfevorateLoading}
+                            isActive={this.state.isfevorate}
+                            >&#9733;</Rating>
+                        )   
         return (
             <Container>
 
@@ -119,6 +125,7 @@ class MovieDetails extends Component {
                         </Card>
                     )}
                 </div>
+                <Recomandation movieId={id} title={title}/>
             </Container >
         );
     }

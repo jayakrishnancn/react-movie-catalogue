@@ -32,3 +32,6 @@ code {
 .p-0{
   padding: 0 !important;
 }
+.pointer{
+  cursor: pointer;
+}

@@ -5,7 +5,6 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    text-align: justify;
     box-shadow: 3px 3px 5px 0px #ccc;
 }
 .card-title{
@@ -40,7 +39,6 @@
 }
 .card .star{
     box-sizing: border-box;
-    cursor: pointer;
     background: #FFF;
     color: #555;
     border: 3px solid #888;
@@ -52,4 +50,17 @@
     color: #FFF;
     border-color: #F44336;
     background-color: #F44336;
+}
+
+.mini-star{
+    border: none;
+    position: absolute;
+    right: 0;
+    border-radius: 0px;
+    color: red;
+    z-index: -1;
+    width: 25px;
+    top:0;
+    transform: translate(0) !important;
+    height: 25px;
 }
