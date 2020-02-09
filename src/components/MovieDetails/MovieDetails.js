@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Container from '../../hoc/Container';
 import Card from '../Card/Card';
+import Button from '../../hoc/Button';
 
 
 class MovieDetails extends Component {
@@ -12,7 +13,7 @@ class MovieDetails extends Component {
 
     shouldComponentUpdate(newProps,newState){
         console.log("[MovieDetails.js] should render")
-        return !newState.movie.title || newState.movie.title != this.state.movie.title
+        return !newState.movie.title || newState.movie.title !== this.state.movie.title
     }
 
     componentDidMount(){
@@ -34,10 +35,13 @@ class MovieDetails extends Component {
         const title = this.state.movie.title;
         const body = this.state.movie.body
         return ( 
-            <Container>
-                <div  style={{maxWidth:"650px",margin:'auto'}}>
-                <Card title={title} body={body} />
-            </div>
+            <Container> 
+                <div style={{maxWidth:"650px",margin:'auto'}}>
+                    <div style={{margin:'10px 0'}} >
+                        <Button click={this.props.history.goBack}>Back</Button>
+                    </div>
+                    <Card title={title} body={body} />
+                </div>
             </Container>
          );
     }

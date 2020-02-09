@@ -27,5 +27,6 @@
   justify-content: left;
 }
 .navbar + div {
+  padding-top: 2rem;
   margin-top: 60px;
 }

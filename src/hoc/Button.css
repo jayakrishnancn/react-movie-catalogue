@@ -1,0 +1,32 @@
+.btn{
+    background-color: #fff;
+    border: 3px solid #777;
+    padding: .5rem 0.7rem;
+    border-radius: 3px;
+    outline: none;
+    transition: .2s ease-in-out;
+}
+.btn:hover,
+.btn:active{
+    background: #f0f0f0;
+    cursor: pointer;
+}
+.btn.success{
+    background-color: #4caf50;
+    border-color: #2e7d32;
+    color: #fff !important;
+}
+.btn.success:hover,
+.btn.success:active{
+    background-color: #2e7d32;
+}
+
+.btn.danger{
+    background-color: #f44336;
+    border-color: #d32f2f;
+    color: #fff !important;
+}
+.btn.danger:hover,
+.btn.danger:active{
+    background-color: #d32f2f;
+}

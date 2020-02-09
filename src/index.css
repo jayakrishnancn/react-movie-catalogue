@@ -13,8 +13,8 @@ code {
 }
 
 .container{
-  width: 100%;
-  padding: 1rem;
+  width: 96%;
+  margin: auto;
   box-sizing: border-box;
   max-width: 1140px;
 }
