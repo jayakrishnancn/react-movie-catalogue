@@ -46,8 +46,11 @@ class Recomandation extends Component {
     render() { 
 
         console.log(this.state.movies,"render")
-                            
+        if(this.state.movies.length==0){
+            return null
+        }                            
         return ( 
+
             <div className="recomandation" style={{maxWidth:'900px',margin:'auto',marginTop:'40px'}}>
                 <h3>Top Recomandation for {this.props.title}</h3>
                 <CardGroup>
@@ -58,7 +61,7 @@ class Recomandation extends Component {
                              title={movie.title}
                              body={movie.overview.length > 80 ? movie.overview.slice(0, 80) + "..." : movie.overview}
                              image={movie.coverImage}
-                             to={"/movie/" + movie.id}
+                             to={"/movie/"+movie.id}
                          />
                     })}
                 </CardGroup>

@@ -64,3 +64,8 @@
     transform: translate(0) !important;
     height: 25px;
 }
+@media(max-width:600px){
+    .card-group .card{
+        max-width: 100%;
+    }
+}

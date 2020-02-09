@@ -14,6 +14,7 @@ class MovieDetails extends Component {
 
     constructor(props) {
         super(props);
+        console.log("[MovieDetails.js] constructor")
         this.state = { 
             movie: {}, 
             loading: true , 
@@ -23,21 +24,38 @@ class MovieDetails extends Component {
     }
 
     shouldComponentUpdate(newProps, newState) {
-        console.log("[MovieDetails.js] should render")
-        return !newState.movie.id || newState.movie.id !== this.state.movie.id ||
-        newState.isfevorate !== this.state.isfevorate || this.state.isfevorateLoading !== newState.isfevorateLoading
+        console.log("[MovieDetails.js] should update")
+        const id = newProps.match.params.id
+        console.log(id)
+        console.log(this.state.movie.id)
+        
+        if(!this.state.movie.id){
+            return true
+        }
+        return  this.state.loading || this.state.movie.id != newState.movie.id || this.state.isfevorateLoading || newProps.match.params.id +"" !== this.state.movie.id +"" 
+    }
+    componentDidUpdate(prevProp,prevState){
+        console.log("[MovieDetails.js] did update")
+        this.fetchMovie()
     }
 
     componentDidMount() {
+        console.log("[MovieDetails.js] did mount")
         this.fetchMovie()
     }
 
     fetchMovie = () => {
-        if (!this.props.match.params.id) {
+        console.log("[MovieDetails.js] fetchMovie")
+        const id = this.props.match.params.id
+        if (!id) {
             return
         }
 
-        axios.get(movieDb.routes.movie + "/" + this.props.match.params.id)
+        if(id == this.state.movie.id){
+            return 
+        }
+
+        axios.get(movieDb.routes.movie + "/" + id)
             .then(res => {
                 const movie = res.data
                 this.setState({ movie, loading: false })
@@ -45,14 +63,15 @@ class MovieDetails extends Component {
             })
             .then(movieId =>{
                 firebaseAxios.get(firebase.fevorate).then(res =>{
-
+                    console.log("[MovieDetails.js] fetching fevorat from firebase",this.state.isfevorateLoading)
                     for(let key in res.data){
                         if ( res.data[key] === this.state.movie.id ){
                             this.setState({isfevorate:key,isfevorateLoading:false})
-                            return 
+                            return
                         }
                     }
                     this.setState({isfevorateLoading:false})
+                    return 
                 })
             })
     }
@@ -91,6 +110,7 @@ class MovieDetails extends Component {
         }
     }
     render() {
+        console.log("[MovieDetails.js] render")
         const title = this.state.movie.title;
         const id = this.state.movie.id
         const body = this.state.movie.overview
