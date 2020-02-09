@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Container from '../../hoc/Container';
 import Card from '../Card/Card';
 import Button from '../../hoc/Button';
@@ -10,7 +10,7 @@ import Spinner from '../../hoc/Spinner';
 import Rating from '../Rating/Rating';
 import Recomandation from '../Recomandation/Recomandation';
 
-class MovieDetails extends Component {
+class MovieDetails extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -23,18 +23,29 @@ class MovieDetails extends Component {
         }
     }
 
-    shouldComponentUpdate(newProps, newState) {
+/*     shouldComponentUpdate(newProps, newState) {
         console.log("[MovieDetails.js] should update")
         const id = newProps.match.params.id
         console.log(id)
         console.log(this.state.movie.id)
         
         if(!this.state.movie.id){
+            console.log("sate movie")
             return true
         }
-        return  this.state.loading || this.state.movie.id != newState.movie.id || this.state.isfevorateLoading || newProps.match.params.id +"" !== this.state.movie.id +"" 
+
+        if(this.state.isfevorateLoading != newState.isfevorateLoading){
+            console.log(this.state.isfevorateLoading , newState.isfevorateLoading)
+            return true
+        }
+
+         if(newProps.match.params.id +"" !== this.state.movie.id +""){
+             return true
+         }
+
+         return true
     }
-    componentDidUpdate(prevProp,prevState){
+ */    componentDidUpdate(prevProp,prevState){
         console.log("[MovieDetails.js] did update")
         this.fetchMovie()
     }
@@ -63,14 +74,14 @@ class MovieDetails extends Component {
             })
             .then(movieId =>{
                 firebaseAxios.get(firebase.fevorate).then(res =>{
-                    console.log("[MovieDetails.js] fetching fevorat from firebase",this.state.isfevorateLoading)
+                    console.log("[MovieDetails.js] fetching fevorate from firebase",res.data    )
                     for(let key in res.data){
                         if ( res.data[key] === this.state.movie.id ){
                             this.setState({isfevorate:key,isfevorateLoading:false})
                             return
                         }
                     }
-                    this.setState({isfevorateLoading:false})
+                    this.setState({isfevorate:null,isfevorateLoading:false})
                     return 
                 })
             })
